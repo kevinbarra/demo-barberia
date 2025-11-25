@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Power, TrendingUp, Users, Calendar, Bell, Scissors, UserPlus, Menu, ArrowLeft } from 'lucide-react';
+import { Power, TrendingUp, Users, Calendar, Bell, Scissors, UserPlus, Menu, ArrowLeft, Clock, CheckCircle, MoreHorizontal } from 'lucide-react';
 
 export default function AdminDashboard() {
     const [isBusy, setIsBusy] = useState(false);
@@ -44,13 +44,91 @@ export default function AdminDashboard() {
                         </p>
                     </div>
                 </div>
-                <button className="p-2 bg-zinc-900 rounded-full border border-zinc-800 relative">
+                <button className="p-2 bg-zinc-900 rounded-full border border-zinc-800 relative hover:bg-zinc-800 transition">
                     <Bell className="w-5 h-5 text-zinc-400" />
-                    <span className="absolute top-0 right-0 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-zinc-900"></span>
+                    {/* Badge de notificación simulada */}
+                    <span className="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full border-2 border-zinc-900 animate-bounce"></span>
                 </button>
             </header>
 
             <div className="p-6 space-y-8">
+
+                {/* ==============================================
+            NUEVO: AGENDA EN VIVO
+            Argumento: "Aquí ves quién llega y a qué hora"
+           ============================================== */}
+                <section>
+                    <div className="flex justify-between items-end mb-4">
+                        <h2 className="text-zinc-400 text-xs font-bold uppercase tracking-wider">Tu Agenda de Hoy</h2>
+                        <Link href="#" className="text-blue-500 text-xs font-bold">Ver calendario completo</Link>
+                    </div>
+
+                    <div className="space-y-3">
+                        {/* Cita 1: En proceso */}
+                        <div className="bg-zinc-900/50 border border-zinc-800 p-4 rounded-xl flex items-center justify-between border-l-4 border-l-green-500">
+                            <div className="flex items-center gap-4">
+                                <div className="text-center">
+                                    <p className="font-bold text-white">4:00</p>
+                                    <p className="text-xs text-zinc-500">PM</p>
+                                </div>
+                                <div>
+                                    <p className="font-bold text-white">Raúl G. <span className="text-zinc-500 font-normal">- Corte</span></p>
+                                    <p className="text-xs text-green-500 flex items-center gap-1">
+                                        <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                                        En silla (Atendiendo)
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center text-zinc-400">
+                                <Scissors className="w-4 h-4" />
+                            </div>
+                        </div>
+
+                        {/* Cita 2: LA NUEVA (Simulación de la que acaba de caer) */}
+                        <div className="bg-blue-600/10 border border-blue-500/50 p-4 rounded-xl flex items-center justify-between relative overflow-hidden">
+                            {/* Badge de Nuevo */}
+                            <div className="absolute top-0 right-0 bg-blue-600 text-white text-[9px] px-2 py-0.5 rounded-bl-lg font-bold">
+                                NUEVA
+                            </div>
+                            <div className="flex items-center gap-4">
+                                <div className="text-center">
+                                    <p className="font-bold text-white">5:00</p>
+                                    <p className="text-xs text-blue-200">PM</p>
+                                </div>
+                                <div>
+                                    <p className="font-bold text-white">Nuevo Cliente <span className="text-blue-200 font-normal">- Completo</span></p>
+                                    <p className="text-xs text-blue-400 flex items-center gap-1">
+                                        <Clock className="w-3 h-3" />
+                                        Confirmada por Web
+                                    </p>
+                                </div>
+                            </div>
+                            <button className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white shadow-lg">
+                                <CheckCircle className="w-4 h-4" />
+                            </button>
+                        </div>
+
+                        {/* Cita 3: Futura */}
+                        <div className="bg-zinc-900/30 border border-zinc-800/50 p-4 rounded-xl flex items-center justify-between opacity-60">
+                            <div className="flex items-center gap-4">
+                                <div className="text-center">
+                                    <p className="font-bold text-white">6:30</p>
+                                    <p className="text-xs text-zinc-500">PM</p>
+                                </div>
+                                <div>
+                                    <p className="font-bold text-zinc-300">Carlos M. <span className="text-zinc-500 font-normal">- Barba</span></p>
+                                    <p className="text-xs text-zinc-500 flex items-center gap-1">
+                                        <UserPlus className="w-3 h-3" />
+                                        Asignado a Angel
+                                    </p>
+                                </div>
+                            </div>
+                            <button className="w-8 h-8 rounded-full bg-zinc-800/50 flex items-center justify-center text-zinc-500">
+                                <MoreHorizontal className="w-4 h-4" />
+                            </button>
+                        </div>
+                    </div>
+                </section>
 
                 {/* ==============================================
             DEMO PLAN A: EL SEMÁFORO (Switch)
@@ -63,24 +141,23 @@ export default function AdminDashboard() {
 
                     <button
                         onClick={() => setIsBusy(!isBusy)}
-                        className={`w-full h-24 rounded-2xl flex items-center justify-between px-6 transition-all duration-300 shadow-xl border ${isBusy
+                        className={`w-full h-20 rounded-2xl flex items-center justify-between px-6 transition-all duration-300 shadow-xl border ${isBusy
                                 ? 'bg-red-500/10 border-red-500/50 shadow-red-900/20'
                                 : 'bg-green-500/10 border-green-500/50 shadow-green-900/20'
                             }`}
                     >
                         <div className="text-left">
-                            <p className={`font-bold text-xl flex items-center gap-3 mb-1 ${isBusy ? 'text-red-500' : 'text-green-500'}`}>
-                                <Power className="w-6 h-6" />
+                            <p className={`font-bold text-lg flex items-center gap-3 mb-1 ${isBusy ? 'text-red-500' : 'text-green-500'}`}>
+                                <Power className="w-5 h-5" />
                                 {isBusy ? 'OCUPADO' : 'DISPONIBLE'}
                             </p>
                             <p className="text-zinc-400 text-xs">
-                                {isBusy ? 'La agenda web está pausada.' : 'Tus clientes pueden reservar.'}
+                                {isBusy ? 'La web está pausada.' : 'Recibiendo citas web...'}
                             </p>
                         </div>
 
-                        {/* Indicador Visual (Switch) */}
-                        <div className={`w-14 h-8 rounded-full p-1 transition-colors duration-300 ${isBusy ? 'bg-red-500' : 'bg-green-500'}`}>
-                            <div className={`bg-white w-6 h-6 rounded-full shadow-md transform transition-transform duration-300 ${isBusy ? 'translate-x-6' : 'translate-x-0'}`}></div>
+                        <div className={`w-12 h-7 rounded-full p-1 transition-colors duration-300 ${isBusy ? 'bg-red-500' : 'bg-green-500'}`}>
+                            <div className={`bg-white w-5 h-5 rounded-full shadow-md transform transition-transform duration-300 ${isBusy ? 'translate-x-5' : 'translate-x-0'}`}></div>
                         </div>
                     </button>
                 </section>
@@ -90,15 +167,15 @@ export default function AdminDashboard() {
            ============================================== */}
                 <section>
                     <h2 className="text-zinc-400 text-xs font-bold uppercase tracking-wider mb-3">Corte de Caja (Hoy)</h2>
-                    <div className="bg-zinc-900 border border-zinc-800 p-6 rounded-2xl relative overflow-hidden group">
+                    <div className="bg-zinc-900 border border-zinc-800 p-5 rounded-2xl relative overflow-hidden group">
                         {/* Fondo decorativo */}
                         <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/5 rounded-full blur-3xl -mr-16 -mt-16"></div>
 
-                        <div className="flex justify-between items-start mb-6">
+                        <div className="flex justify-between items-start mb-4">
                             <div>
                                 <p className="text-zinc-500 text-xs mb-1">Ingresos Totales</p>
-                                <h3 className="text-4xl font-bold text-white flex items-center gap-1">
-                                    <span className="text-zinc-600 text-2xl font-normal">$</span>
+                                <h3 className="text-3xl font-bold text-white flex items-center gap-1">
+                                    <span className="text-zinc-600 text-xl font-normal">$</span>
                                     {todaySales}
                                 </h3>
                             </div>
@@ -125,14 +202,14 @@ export default function AdminDashboard() {
                             </div>
                         </div>
 
-                        <div className="mt-5 pt-4 border-t border-zinc-800 flex justify-between text-xs text-zinc-500">
+                        <div className="mt-2 pt-3 border-t border-zinc-800 flex justify-between text-xs text-zinc-500">
                             <div className="flex items-center gap-1.5">
                                 <Users className="w-3.5 h-3.5" />
-                                <span>{walkIns} Cliente Local</span>
+                                <span>{walkIns} Walk-in</span>
                             </div>
                             <div className="flex items-center gap-1.5">
                                 <Calendar className="w-3.5 h-3.5" />
-                                <span>{webBookings} Web App</span>
+                                <span>{webBookings} Web</span>
                             </div>
                         </div>
                     </div>
@@ -142,28 +219,28 @@ export default function AdminDashboard() {
             DEMO PLAN C: WALK-IN EXPRESS
            ============================================== */}
                 <section>
-                    <h2 className="text-zinc-400 text-xs font-bold uppercase tracking-wider mb-3">Registro Rápido (Walk-in)</h2>
+                    <h2 className="text-zinc-400 text-xs font-bold uppercase tracking-wider mb-3">Registro Rápido</h2>
                     <div className="grid grid-cols-2 gap-3">
                         <button
                             onClick={() => handleWalkIn(200)}
                             className="bg-zinc-900 border border-zinc-800 p-4 rounded-xl hover:border-blue-500 hover:bg-zinc-800 transition text-left group active:scale-95"
                         >
-                            <div className="bg-blue-500/10 w-10 h-10 rounded-lg flex items-center justify-center mb-3 group-hover:bg-blue-500/20 transition">
-                                <Scissors className="w-5 h-5 text-blue-500" />
+                            <div className="bg-blue-500/10 w-8 h-8 rounded-lg flex items-center justify-center mb-2 group-hover:bg-blue-500/20 transition">
+                                <Scissors className="w-4 h-4 text-blue-500" />
                             </div>
-                            <p className="font-bold text-white">Corte Clásico</p>
-                            <p className="text-blue-400 text-xs font-medium mt-1">+ $200.00</p>
+                            <p className="font-bold text-white text-sm">Corte Clásico</p>
+                            <p className="text-blue-400 text-[10px] font-medium mt-1">+ $200</p>
                         </button>
 
                         <button
                             onClick={() => handleWalkIn(150)}
                             className="bg-zinc-900 border border-zinc-800 p-4 rounded-xl hover:border-purple-500 hover:bg-zinc-800 transition text-left group active:scale-95"
                         >
-                            <div className="bg-purple-500/10 w-10 h-10 rounded-lg flex items-center justify-center mb-3 group-hover:bg-purple-500/20 transition">
-                                <UserPlus className="w-5 h-5 text-purple-500" />
+                            <div className="bg-purple-500/10 w-8 h-8 rounded-lg flex items-center justify-center mb-2 group-hover:bg-purple-500/20 transition">
+                                <UserPlus className="w-4 h-4 text-purple-500" />
                             </div>
-                            <p className="font-bold text-white">Barba Express</p>
-                            <p className="text-purple-400 text-xs font-medium mt-1">+ $150.00</p>
+                            <p className="font-bold text-white text-sm">Barba Express</p>
+                            <p className="text-purple-400 text-[10px] font-medium mt-1">+ $150</p>
                         </button>
                     </div>
                 </section>
@@ -182,7 +259,7 @@ export default function AdminDashboard() {
                 </button>
                 <Link href="/" className="flex flex-col items-center gap-1.5 hover:text-zinc-300 transition">
                     <Users className="w-6 h-6" />
-                    <span className="font-medium">Vista Cliente</span>
+                    <span className="font-medium">Cliente</span>
                 </Link>
                 <button className="flex flex-col items-center gap-1.5 hover:text-zinc-300 transition">
                     <Menu className="w-6 h-6" />
